@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
@@ -13,6 +14,5 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

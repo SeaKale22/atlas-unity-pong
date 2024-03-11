@@ -33,6 +33,13 @@ public class Ball : MonoBehaviour
             ballRigidbody.velocity *= -1;
             
         }
+        if (Collision.gameObject.CompareTag("Wall"))
+        {
+            // inverse y velocity
+            float ballVelocityY = ballRigidbody.velocity.y * -1;
+            ballRigidbody.velocity = new Vector2(ballRigidbody.velocity.x, ballVelocityY);
+
+        }
     }
 
     void BallReset()
