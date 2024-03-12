@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
-public class WinScreen : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -19,13 +17,8 @@ public class WinScreen : MonoBehaviour
         
     }
 
-    public void Restart()
+    public void PlayScene(int Index)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    
-    public void GoToMenu()
-    {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(Index);
     }
 }
