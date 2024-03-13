@@ -6,7 +6,7 @@ using UnityEngine;
 public class AIPlayer : MonoBehaviour
 {
     public GameObject ball;
-    public bool difficulty;
+    public int difficulty;
     
     private Paddle parentPaddle;
     private Rigidbody2D ballRigidbody;
@@ -32,17 +32,36 @@ public class AIPlayer : MonoBehaviour
 
     void AIMovement()
     {
-        if (difficulty == false)
+        if (difficulty == 1)
         {
             LevelOneMove();
         }
-        if (difficulty == true)
+        if (difficulty == 2)
         {
             LevelTwoMove();
+        }
+        if (difficulty == 3)
+        {
+            LevelThreeMove();
         }
     }
 
     void LevelOneMove()
+    {
+        if (ball.transform.localPosition.x >= 0 && ballRigidbody.velocity.x > 0)
+        {
+            if (ball.transform.localPosition.y > parentPaddle.transform.localPosition.y)
+            {
+                parentPaddle.MoveUp();
+            }
+
+            if (ball.transform.localPosition.y < parentPaddle.transform.localPosition.y)
+            {
+                parentPaddle.MoveDown();
+            }
+        }
+    }
+    void LevelTwoMove()
     {
         if (ballRigidbody.velocity.x > 0)
         {
@@ -57,7 +76,7 @@ public class AIPlayer : MonoBehaviour
             }
         }
     }
-    void LevelTwoMove()
+    void LevelThreeMove()
     {
         if (ball.transform.localPosition.y > parentPaddle.transform.localPosition.y)
         {

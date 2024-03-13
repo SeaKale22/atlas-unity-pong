@@ -7,16 +7,23 @@ public class Ball : MonoBehaviour
 {
     public float ballSpeed;
     public float ballSpeedIncrementer;
+    public AudioClip goalPing;
+    public AudioClip paddlePing;
+    public AudioClip wallPing;
 
+    private AudioSource ballAudio;
     private float ballSpeedIncreasing;
     private Rigidbody2D ballRigidbody;
     private RectTransform ballTransform;
     public ScoreTracker ScoreTracker;
     
     
+    
     // Start is called before the first frame update
     void Start()
     {
+        // get ball AudioScorce
+        ballAudio = GetComponent<AudioSource>();
         // set ball speed increasing
         ballSpeedIncreasing = ballSpeed;
         // get ball's rigid body
@@ -31,6 +38,11 @@ public class Ball : MonoBehaviour
         // Collision response to hitting a paddle, should bounce ball in opposite direction
         if (Collision.gameObject.CompareTag("Paddle"))
         {
+            // play audio
+            RandomPitch();
+            ballAudio.clip = paddlePing;
+            ballAudio.Play();
+            
             // Get Paddle tansform
             RectTransform paddleTransform = Collision.GetComponent<RectTransform>();
             //calculate angle
@@ -45,6 +57,11 @@ public class Ball : MonoBehaviour
         }
         if (Collision.gameObject.CompareTag("Wall"))
         {
+            // play audio
+            RandomPitch();
+            ballAudio.clip = wallPing;
+            ballAudio.Play();
+            
             // inverse y velocity
             float ballVelocityY = ballRigidbody.velocity.y * -1;
             ballRigidbody.velocity = new Vector2(ballRigidbody.velocity.x, ballVelocityY);
@@ -53,6 +70,14 @@ public class Ball : MonoBehaviour
 
         if (Collision.gameObject.CompareTag("Goal"))
         {
+            // play audio
+            RandomPitch();
+            ballAudio.volume = 0.3f;
+            ballAudio.clip = goalPing;
+            ballAudio.Play();
+            ballAudio.volume = 1f;
+            
+            //adjust score
             if (Collision.gameObject.name == "LeftGoal")
             {
                 ScoreTracker.PlayerTwoScores();
@@ -90,5 +115,10 @@ public class Ball : MonoBehaviour
         }
         ballRigidbody.velocity = new Vector2(xValue, yValue).normalized * ballSpeed;
         Debug.Log($"X : {xValue}\nY : {yValue}");
+    }
+
+    void RandomPitch()
+    {
+        ballAudio.pitch = Random.Range(0.8f, 1.2f);
     }
 }

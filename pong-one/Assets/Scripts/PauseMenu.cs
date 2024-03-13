@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DifficultyControl : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
-    public AIPlayer AIPlayer;
-    public GameObject DifficultyCanvas;
+    public GameObject pauseCanvas;
     
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
         
     }
 
@@ -20,17 +18,22 @@ public class DifficultyControl : MonoBehaviour
     {
         
     }
-
-    public void DifficultyOn(int difficulty)
+    
+    public void Restart()
     {
-        AIPlayer.difficulty = difficulty;
         Time.timeScale = 1;
-        DifficultyCanvas.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     public void GoToMenu()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void Return()
+    {
+        Time.timeScale = 1;
+        pauseCanvas.SetActive(false);
     }
 }
