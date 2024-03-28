@@ -11,7 +11,7 @@ public class Player : Paddle
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Time.timeScale = 0.25f;
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class Player : Paddle
         {
             if (pauseCanvas.activeSelf)
             {
-                Time.timeScale = 1;
+                Time.timeScale = 1f;
                 pauseCanvas.SetActive(false);
             }
             else

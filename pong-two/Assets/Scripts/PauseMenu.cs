@@ -21,13 +21,13 @@ public class PauseMenu : MonoBehaviour
     
     public void Restart()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     public void GoToMenu()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
