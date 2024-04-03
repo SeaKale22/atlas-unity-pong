@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
@@ -12,16 +14,24 @@ public class Ball : MonoBehaviour
     public AudioClip wallPing;
 
     private AudioSource ballAudio;
+    private float bounceCount = 0;
     private float ballSpeedIncreasing;
     private Rigidbody2D ballRigidbody;
     private RectTransform ballTransform;
     public ScoreTracker ScoreTracker;
+    private ParticleSystem ballParticles;
     
-    
+    // color values
+    private float red = 1;
+    private float green = 1;
+    private float blue = 0.6773585f;
+    private float alpha = 0.1f;
     
     // Start is called before the first frame update
     void Start()
     {
+        // get ball particle system
+        ballParticles = GetComponent<ParticleSystem>();
         // get ball AudioScorce
         ballAudio = GetComponent<AudioSource>();
         // set ball speed increasing
@@ -54,6 +64,13 @@ public class Ball : MonoBehaviour
 
             // increase ball speed
             ballSpeedIncreasing += ballSpeedIncrementer;
+            
+            // increase ball bounce count
+            bounceCount += 1;
+            Debug.Log($"bounceCount: {bounceCount}");
+            
+            // change particle properties
+            ChangeParticles(bounceCount);
         }
         if (Collision.gameObject.CompareTag("Wall"))
         {
@@ -92,6 +109,12 @@ public class Ball : MonoBehaviour
 
             // reset ball speed
             ballSpeedIncreasing = ballSpeed;
+            
+            // reset bounce count
+            bounceCount = 0;
+            
+            // change particles
+            ChangeParticles(bounceCount);
         }
     }
 
@@ -120,5 +143,29 @@ public class Ball : MonoBehaviour
     void RandomPitch()
     {
         ballAudio.pitch = Random.Range(0.8f, 1.2f);
+    }
+
+    void ChangeParticles(float count)
+    {
+        var main = ballParticles.main;
+        switch (count)
+        {
+            case 0:
+                red = 1;
+                green = 1;
+                blue = 0.6773585f;
+                alpha = 0.1f;
+                main.startSize = 5;
+                main.startColor = new Color(red, green, blue, alpha);
+                break;
+            default:
+                main.startSize =
+                    new ParticleSystem.MinMaxCurve(main.startSize.constantMin + 1, main.startSize.constantMax);
+                green -= 0.1f;
+                blue -= 0.05f;
+                alpha += 0.05f;
+                main.startColor = new Color(red, green, blue, alpha);
+                break;
+        }
     }
 }
