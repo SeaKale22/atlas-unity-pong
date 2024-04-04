@@ -62,8 +62,11 @@ public class Ball : MonoBehaviour
             Vector2 direction = new Vector2(x, y).normalized;
             ballRigidbody.velocity = direction  * ballSpeedIncreasing;
 
-            // increase ball speed
-            ballSpeedIncreasing += ballSpeedIncrementer;
+            // increase ball speed if bounce count is less than 17
+            if (bounceCount < 17)
+            {
+                ballSpeedIncreasing += ballSpeedIncrementer;
+            }
             
             // increase ball bounce count
             bounceCount += 1;
